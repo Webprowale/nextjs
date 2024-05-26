@@ -62,12 +62,12 @@ const Popup = ({ show, onClose }: { show: boolean; onClose: () => void }) => {
       </div>
       {managescreen ? (
         <>
-          <div className="tab w-full grid grid-cols-10 mx-3 mt-10 gap-5">
+          <div className="tab w-full grid grid-cols-10 mx-3 mt-10 gap-5 pt-[20px]">
             <div className="col-span-3 flex items-center p-1 cursor-pointer bg-white justify-center">
               <Image src="/chat-icon.png" alt="icon" width={30} height={20} />
               <p className="font-bold text-[1rem] ms-2">Paddi</p>
             </div>
-            <div className=" col-span-3 flex items-center p-1 cursor-pointer justify-center">
+            <div className=" col-span-3 flex items-center p-1 cursor-pointer hover:bg-white justify-center">
               <Image
                 src="/assets/c_icon.png"
                 alt="icon"
@@ -76,7 +76,7 @@ const Popup = ({ show, onClose }: { show: boolean; onClose: () => void }) => {
               />
               <p className="font-bold text-[1rem] ms-2">Tumini</p>
             </div>
-            <div className=" col-span-4 flex items-center p-1 cursor-pointer justify-center">
+            <div className=" col-span-4 flex items-center p-1 cursor-pointer hover:bg-white justify-center">
               <Image
                 src="/assets/need_icon.png"
                 alt="icon"
