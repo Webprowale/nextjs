@@ -1,24 +1,43 @@
 import Image from "next/image";
 import React, { useState } from "react";
-import Carddchat from "./carddchat";
+import Chatinput from "./chatinput";
+import ChatScreen from "./chatScreen";
+import Form from "./form";
 
 const Popup = ({ show, onClose }: { show: boolean; onClose: () => void }) => {
   const [managescreen, setSecreen] = useState(false);
+  const [currentComponent, setCurrentComponent] = useState<string>("paddi");
 
   const handlescreen = () => {
     setSecreen(true);
   };
+
   if (!show) return null;
 
+  const renderComponent = () => {
+    switch (currentComponent) {
+      case "paddi":
+        return <ChatScreen />;
+      case "form":
+        return <Form />;
+      default:
+        return <ChatScreen />;
+    }
+  };
+
+  const handleCompontent = (component: string) => {
+    setCurrentComponent(component);
+  };
+
   return (
-    <div className="fixed right-0 z-[30] bottom-0 h-full  bg-[#E7F0FF] w-screen md:w-[560px]  flex flex-col justify-start items-start overflow-x-hidden">
-      <div className="w-full h-[60px] flex justify-between  text-white  mb-[-35px] z-[1] items-center">
+    <div className="fixed right-0 z-[30] bottom-0 h-full bg-[#E7F0FF] w-screen md:w-[560px] flex flex-col justify-start items-start overflow-x-hidden">
+      <div className="w-full h-[60px] flex justify-between text-white mb-[-35px] z-[1] items-center">
         <div
-          className="w-[68px] h-[26px] flex text-[10px] ml-[12px] justify-start items-center cursor-pointer "
+          className="w-[68px] h-[26px] flex text-[10px] ml-[12px] justify-start items-center cursor-pointer"
           onClick={onClose}
         >
-          <span className=" text-black text-[0.9rem]">X</span>
-          <span className=" text-black ml-1 text-[0.9rem]  ">Close</span>
+          <span className="text-black text-[0.9rem]">X</span>
+          <span className="text-black ml-1 text-[0.9rem]">Close</span>
         </div>
 
         <div className="mr-5 flex flex-col relative gap-[2.6px] justify-start items-end group">
@@ -63,11 +82,17 @@ const Popup = ({ show, onClose }: { show: boolean; onClose: () => void }) => {
       {managescreen ? (
         <>
           <div className="tab w-full grid grid-cols-10 mx-3 mt-10 gap-5 pt-[20px]">
-            <div className="col-span-3 flex items-center p-1 cursor-pointer bg-white justify-center">
+            <button
+              className="col-span-3 flex items-center p-1 cursor-pointer bg-white justify-center"
+              onClick={() => handleCompontent("paddi")}
+            >
               <Image src="/chat-icon.png" alt="icon" width={30} height={20} />
               <p className="font-bold text-[1rem] ms-2">Paddi</p>
-            </div>
-            <div className=" col-span-3 flex items-center p-1 cursor-pointer hover:bg-white justify-center">
+            </button>
+            <div
+              className="col-span-3 flex items-center p-1 cursor-pointer hover:bg-white justify-center"
+              onClick={() => handleCompontent("tumini")}
+            >
               <Image
                 src="/assets/c_icon.png"
                 alt="icon"
@@ -76,7 +101,10 @@ const Popup = ({ show, onClose }: { show: boolean; onClose: () => void }) => {
               />
               <p className="font-bold text-[1rem] ms-2">Tumini</p>
             </div>
-            <div className=" col-span-4 flex items-center p-1 cursor-pointer hover:bg-white justify-center">
+            <div
+              className="col-span-4 flex items-center p-1 cursor-pointer hover:bg-white justify-center"
+              onClick={() => handleCompontent("reps")}
+            >
               <Image
                 src="/assets/need_icon.png"
                 alt="icon"
@@ -86,79 +114,40 @@ const Popup = ({ show, onClose }: { show: boolean; onClose: () => void }) => {
               <p className="font-bold text-[1rem] ms-1">GoPaddiReps</p>
             </div>
           </div>
-          <div className="bg-white w-full h-full">
-            <div className="flex justify-between mx-5 my-5">
-              <div className="flex items-center group">
-                <p className="font-semibold text-[1.1rem]">Your Paddi</p>
-                <Image
-                  src="/assets/downArrow.png"
-                  alt="icon"
-                  width={14}
-                  height={14}
-                  className="ms-2"
-                />
-              </div>
-              <div className="flex items-center">
-                <Image
-                  src="/assets/NewChat.png"
-                  alt="icon"
-                  width={40}
-                  height={40}
-                  className="ms-2"
-                />
-                <Image
-                  src="/assets/Home.png"
-                  alt="icon"
-                  width={40}
-                  height={40}
-                  className="ms-2"
-                />
-              </div>
+        <div className="bg-white  w-full h-full">
+        <div className="flex justify-between mx-5 my-5">
+            <div className="flex items-center group">
+              <p className="font-semibold text-[1.1rem]">Your Paddi</p>
+              <Image
+                src="/assets/downArrow.png"
+                alt="icon"
+                width={14}
+                height={14}
+                className="ms-2"
+              />
             </div>
-            <div className="chat flex flex-col px-5 pt-5 mb-[15px]">
-              <div className="one flex items-center mb-[24px]">
-                <Image
-                  src="/assets/avatar2.png"
-                  alt="icon"
-                  width={50}
-                  height={50}
-                />
-                <p className="ms-3 p-3">
-                  I'll be in New York for 1 day. Can you recommend what I should
-                  do to see the best of the city?
-                </p>
-              </div>
-              <div className="one flex items-start flex-col gap-[8px] justify-start ">
-                <div className="flex items-center gap-[12px] justify-start">
-                  <Image
-                    src="/chat-icon.png"
-                    alt="icon"
-                    width={50}
-                    height={50}
-                  />
-                  <p>
-                    I got you! Here are some flight options I collated for you…
-                  </p>
-                </div>
-                <div className="w-full overflow-x-auto py-4 whitespace-nowrap scroll-smooth">
-                  <div className="flex justify-center items-center gap-7">
-                    <div className="opacity-0 w-auto ml-[-500px] cursor-none">
-                    <Carddchat />
-                    </div>
-                    <Carddchat />
-                    <Carddchat />
-                    <Carddchat />
-                    {/* <Carddchat /> */}
-                    {/* <Carddchat />
-                    <Carddchat />
-                    <Carddchat />
-                    <Carddchat /> */}
-
-                  </div>
-                </div>
-              </div>
+            <div className="flex items-center">
+             
+              <Image
+                src="/assets/Home.png"
+                alt="icon"
+                width={40}
+                height={40}
+                className="ms-2"
+                onClick={() => handleCompontent("paddi")}
+              />
+               <Image
+                src="/assets/NewChat.png"
+                alt="icon"
+                width={40}
+                height={40}
+                className="ms-2"
+                onClick={()=>setCurrentComponent('form')}
+              />
             </div>
           </div>
+        </div>
+          {renderComponent()}
         </>
       ) : (
         <>
@@ -190,34 +179,8 @@ const Popup = ({ show, onClose }: { show: boolean; onClose: () => void }) => {
                 I can plan your next trip
               </span>
             </div>
-            <div className="flex md:mt-10 mx-3 md:mx-10 border-[1px] border-[#98A2B3] px-0 py-3 ">
-              <input
-                type="text"
-                className="ps-2 border-0 outline-none flex-grow"
-              />
-              <div className="vectors flex gap-[5px] flex-1 justify-end pe-3">
-                <Image
-                  src="/assets/vector (1).png"
-                  alt="input-icon"
-                  className="mx-1"
-                  width={24}
-                  height={24}
-                />
-                <Image
-                  src="/assets/vector (2).png"
-                  alt="input-icon"
-                  className="mx-1"
-                  width={24}
-                  height={24}
-                />
-                <Image
-                  src="/assets/vector.png"
-                  alt="input-icon"
-                  className="mx-1"
-                  width={24}
-                  height={24}
-                />
-              </div>
+            <div className="border-[1px] border-[#98A2B3] p-0 md:mx-10 my-4">
+              <Chatinput />
             </div>
           </div>
           <div className="downimage w-full h-[100%] bg-white pt-[5rem]">
