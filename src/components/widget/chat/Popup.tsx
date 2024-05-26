@@ -1,5 +1,6 @@
 import Image from "next/image";
 import React, { useState } from "react";
+import Carddchat from "./carddchat";
 
 const Popup = ({ show, onClose }: { show: boolean; onClose: () => void }) => {
   const [managescreen, setSecreen] = useState(false);
@@ -18,7 +19,6 @@ const Popup = ({ show, onClose }: { show: boolean; onClose: () => void }) => {
         >
           <span className=" text-black text-[0.9rem]">X</span>
           <span className=" text-black ml-1 text-[0.9rem]  ">Close</span>
-          
         </div>
 
         <div className="mr-5 flex flex-col relative gap-[2.6px] justify-start items-end group">
@@ -26,13 +26,37 @@ const Popup = ({ show, onClose }: { show: boolean; onClose: () => void }) => {
           <span className="w-[18px] h-[2.45px] rounded-[7px] bg-[blue]" />
           <div className="absolute top-[12px] shadow right-[-100vw] transition-all ease-in-out duration-300 group-hover:right-[4px] rounded-[4px] p-[12px] bg-white w-[276px] h-auto">
             <ul>
-              <li className="flex my-3 mx-3 p-3 items-center text-black bg-[#F3F7FF]"><Image src="/assets/question.png" alt="icon" className="me-2" width={25} height={25}  />See chat history</li>
-              <li className="flex my-3 mx-3 p-3 items-center text-black"><Image src="/assets/question.png" alt="icon"  className="me-2" width={25} height={25}  />What is Paddi?</li>
-              <li className="flex my-3 mx-3 p-3 items-center text-black"><Image src="/assets/question.png" alt="icon"  className="me-2" width={25} height={25}  />Turn off sound</li>
-              
-
+              <li className="flex my-3 mx-3 p-3 items-center text-black bg-[#F3F7FF]">
+                <Image
+                  src="/assets/question.png"
+                  alt="icon"
+                  className="me-2"
+                  width={25}
+                  height={25}
+                />
+                See chat history
+              </li>
+              <li className="flex my-3 mx-3 p-3 items-center text-black hover:bg-[#F3F7FF]">
+                <Image
+                  src="/assets/question.png"
+                  alt="icon"
+                  className="me-2"
+                  width={25}
+                  height={25}
+                />
+                What is Paddi?
+              </li>
+              <li className="flex my-3 mx-3 p-3 items-center text-black hover:bg-[#F3F7FF]">
+                <Image
+                  src="/assets/question.png"
+                  alt="icon"
+                  className="me-2"
+                  width={25}
+                  height={25}
+                />
+                Turn off sound
+              </li>
             </ul>
-           
           </div>
         </div>
       </div>
@@ -66,24 +90,73 @@ const Popup = ({ show, onClose }: { show: boolean; onClose: () => void }) => {
             <div className="flex justify-between mx-5 my-5">
               <div className="flex items-center group">
                 <p className="font-semibold text-[1.1rem]">Your Paddi</p>
-                <Image src="/assets/downArrow.png" alt="icon" width={14} height={14}  className="ms-2"/>
+                <Image
+                  src="/assets/downArrow.png"
+                  alt="icon"
+                  width={14}
+                  height={14}
+                  className="ms-2"
+                />
               </div>
               <div className="flex items-center">
-              <Image src="/assets/NewChat.png" alt="icon" width={40} height={40}  className="ms-2"/>
-              <Image src="/assets/Home.png" alt="icon" width={40} height={40}  className="ms-2"/>
+                <Image
+                  src="/assets/NewChat.png"
+                  alt="icon"
+                  width={40}
+                  height={40}
+                  className="ms-2"
+                />
+                <Image
+                  src="/assets/Home.png"
+                  alt="icon"
+                  width={40}
+                  height={40}
+                  className="ms-2"
+                />
               </div>
             </div>
-            <div className="chat flex flex-col px-5 pt-5">
-             <div className="one flex items-center">
-             <Image src="/assets/avatar2.png" alt="icon"  width={50} height={50}/>
-              <p className="ms-3 p-3">I'll be in New York for 1 day. Can you recommend what I should do to see the best of the city?</p>
-             </div>
-             <div className="one flex items-center">
-             <Image src="/chat-icon.png" alt="icon"  width={50} height={50}/>
-             <div className="ms-3 p-3">
-              <p>Absolutely! New York City is packed with countless attractions, so here's a suggested itinerary for one day to help you see some of the best the city has to offer:</p>
-             </div>
-             </div>
+            <div className="chat flex flex-col px-5 pt-5 mb-[15px]">
+              <div className="one flex items-center mb-[24px]">
+                <Image
+                  src="/assets/avatar2.png"
+                  alt="icon"
+                  width={50}
+                  height={50}
+                />
+                <p className="ms-3 p-3">
+                  I'll be in New York for 1 day. Can you recommend what I should
+                  do to see the best of the city?
+                </p>
+              </div>
+              <div className="one flex items-start flex-col gap-[8px] justify-start ">
+                <div className="flex items-center gap-[12px] justify-start">
+                  <Image
+                    src="/chat-icon.png"
+                    alt="icon"
+                    width={50}
+                    height={50}
+                  />
+                  <p>
+                    I got you! Here are some flight options I collated for you…
+                  </p>
+                </div>
+                <div className="w-full overflow-x-auto py-4 whitespace-nowrap scroll-smooth">
+                  <div className="flex justify-center items-center gap-7">
+                    <div className="opacity-0 w-auto ml-[-500px] cursor-none">
+                    <Carddchat />
+                    </div>
+                    <Carddchat />
+                    <Carddchat />
+                    <Carddchat />
+                    {/* <Carddchat /> */}
+                    {/* <Carddchat />
+                    <Carddchat />
+                    <Carddchat />
+                    <Carddchat /> */}
+
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </>
