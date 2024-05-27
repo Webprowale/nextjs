@@ -1,18 +1,29 @@
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Chatinput from "./chatinput";
 import ChatScreen from "./chatScreen";
 import Form from "./form";
+import Tumini from "./tumini";
+import Reps from "./reps";
 
 const Popup = ({ show, onClose }: { show: boolean; onClose: () => void }) => {
   const [managescreen, setSecreen] = useState(false);
   const [currentComponent, setCurrentComponent] = useState<string>("paddi");
+  const [submenus, setMenus] = useState<string>("Your Paddi");
 
   const handlescreen = () => {
     setSecreen(true);
   };
-
-  if (!show) return null;
+  useEffect(() => {
+    if (currentComponent === "tumini") {
+      setMenus('Your Relationship manager');
+    } else if (currentComponent === "reps") {
+      setMenus('GoPaddi Rep');
+    } else {
+      setMenus('Your Paddi'); 
+    }
+  }, [currentComponent]);
+ 
 
   const renderComponent = () => {
     switch (currentComponent) {
@@ -20,17 +31,21 @@ const Popup = ({ show, onClose }: { show: boolean; onClose: () => void }) => {
         return <ChatScreen />;
       case "form":
         return <Form />;
+        case "tumini":
+        return <Tumini />;
+        case "reps":
+          return <Reps />;
       default:
         return <ChatScreen />;
     }
   };
-
+  if (!show) return null;
   const handleCompontent = (component: string) => {
     setCurrentComponent(component);
   };
 
   return (
-    <div className="fixed right-0 z-[30] bottom-0 h-full bg-[#E7F0FF] w-screen md:w-[560px] flex flex-col justify-start items-start overflow-x-hidden">
+    <div className="fixed right-0 z-[30] bottom-0 h-full bg-[#E7F0FF]  w-screen md:w-[560px] flex flex-col justify-start items-start overflow-x-hidden">
       <div className="w-full h-[60px] flex justify-between text-white mb-[-35px] z-[1] items-center">
         <div
           className="w-[68px] h-[26px] flex text-[10px] ml-[12px] justify-start items-center cursor-pointer"
@@ -83,14 +98,14 @@ const Popup = ({ show, onClose }: { show: boolean; onClose: () => void }) => {
         <>
           <div className="tab w-full grid grid-cols-10 mx-3 mt-10 gap-5 pt-[20px]">
             <button
-              className="col-span-3 flex items-center p-1 cursor-pointer bg-white justify-center"
+              className={`col-span-3 flex items-center p-1 cursor-pointer ${currentComponent === "paddi" ? "bg-white" : ""} justify-center`}
               onClick={() => handleCompontent("paddi")}
             >
               <Image src="/chat-icon.png" alt="icon" width={30} height={20} />
               <p className="font-bold text-[1rem] ms-2">Paddi</p>
             </button>
             <div
-              className="col-span-3 flex items-center p-1 cursor-pointer hover:bg-white justify-center"
+              className={`col-span-3 flex ${currentComponent === "tumini" ? "bg-white" : ""} items-center p-1 cursor-pointer hover:bg-white justify-center`}
               onClick={() => handleCompontent("tumini")}
             >
               <Image
@@ -102,7 +117,7 @@ const Popup = ({ show, onClose }: { show: boolean; onClose: () => void }) => {
               <p className="font-bold text-[1rem] ms-2">Tumini</p>
             </div>
             <div
-              className="col-span-4 flex items-center p-1 cursor-pointer hover:bg-white justify-center"
+              className={`col-span-4 flex items-center ${currentComponent === "reps" ? "bg-white" : ""} p-1 cursor-pointer hover:bg-white justify-center`}
               onClick={() => handleCompontent("reps")}
             >
               <Image
@@ -117,7 +132,7 @@ const Popup = ({ show, onClose }: { show: boolean; onClose: () => void }) => {
         <div className="bg-white  w-full h-full">
         <div className="flex justify-between mx-5 my-5">
             <div className="flex items-center group">
-              <p className="font-semibold text-[1.1rem]">Your Paddi</p>
+              <p className="font-semibold text-[1.1rem]">{submenus}</p>
               <Image
                 src="/assets/downArrow.png"
                 alt="icon"

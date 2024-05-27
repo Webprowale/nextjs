@@ -6,7 +6,6 @@ import Chatinput from "./chatinput";
 function ChatScreen() {
   return (
     <div className="bg-white w-full h-full">
-     
       <div className="chat flex flex-col px-5 pt-5 mb-[15px]">
         <div className="one flex items-center mb-[24px]">
           <Image src="/assets/avatar2.png" alt="icon" width={50} height={50} />
@@ -30,9 +29,11 @@ function ChatScreen() {
               <Carddchat />
             </div>
           </div>
-          <div className="w-full mt-20 mb-5 border-t-[2px] pt-3">
-            <Chatinput />
-          </div>
+        </div>
+      </div>
+      <div className="mt-[200px]">
+        <div className="border-t">
+          <Chatinput />
         </div>
       </div>
     </div>
