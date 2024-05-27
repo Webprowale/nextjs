@@ -5,6 +5,7 @@ import ChatScreen from "./chatScreen";
 import Form from "./form";
 import Tumini from "./tumini";
 import Reps from "./reps";
+import History from "./history";
 
 const Popup = ({ show, onClose }: { show: boolean; onClose: () => void }) => {
   const [managescreen, setSecreen] = useState(false);
@@ -16,14 +17,16 @@ const Popup = ({ show, onClose }: { show: boolean; onClose: () => void }) => {
   };
   useEffect(() => {
     if (currentComponent === "tumini") {
-      setMenus('Your Relationship manager');
+      setMenus("Your Relationship manager");
     } else if (currentComponent === "reps") {
-      setMenus('GoPaddi Rep');
-    } else {
-      setMenus('Your Paddi'); 
+      setMenus("GoPaddi Rep");
+    } else if (currentComponent === "history") {
+      setMenus("");
+    } 
+     else {
+      setMenus("Your Paddi");
     }
   }, [currentComponent]);
- 
 
   const renderComponent = () => {
     switch (currentComponent) {
@@ -31,10 +34,12 @@ const Popup = ({ show, onClose }: { show: boolean; onClose: () => void }) => {
         return <ChatScreen />;
       case "form":
         return <Form />;
-        case "tumini":
+      case "tumini":
         return <Tumini />;
-        case "reps":
-          return <Reps />;
+      case "reps":
+        return <Reps />;
+      case "history":
+        return <History />;
       default:
         return <ChatScreen />;
     }
@@ -60,7 +65,10 @@ const Popup = ({ show, onClose }: { show: boolean; onClose: () => void }) => {
           <span className="w-[18px] h-[2.45px] rounded-[7px] bg-[blue]" />
           <div className="absolute top-[12px] shadow right-[-100vw] transition-all ease-in-out duration-300 group-hover:right-[4px] rounded-[4px] p-[12px] bg-white w-[276px] h-auto">
             <ul>
-              <li className="flex my-3 mx-3 p-3 items-center text-black bg-[#F3F7FF]">
+              <li
+                className="flex my-3 mx-3 p-3 items-center text-black bg-[#F3F7FF]"
+                onClick={() => handleCompontent("history")}
+              >
                 <Image
                   src="/assets/question.png"
                   alt="icon"
@@ -98,14 +106,18 @@ const Popup = ({ show, onClose }: { show: boolean; onClose: () => void }) => {
         <>
           <div className="tab w-full grid grid-cols-10 mx-3 mt-10 gap-5 pt-[20px]">
             <button
-              className={`col-span-3 flex items-center p-1 cursor-pointer ${currentComponent === "paddi" ? "bg-white" : ""} justify-center`}
+              className={`col-span-3 flex items-center p-1 cursor-pointer ${
+                currentComponent === "paddi" ? "bg-white" : ""
+              } justify-center`}
               onClick={() => handleCompontent("paddi")}
             >
               <Image src="/chat-icon.png" alt="icon" width={30} height={20} />
               <p className="font-bold text-[1rem] ms-2">Paddi</p>
             </button>
             <div
-              className={`col-span-3 flex ${currentComponent === "tumini" ? "bg-white" : ""} items-center p-1 cursor-pointer hover:bg-white justify-center`}
+              className={`col-span-3 flex ${
+                currentComponent === "tumini" ? "bg-white" : ""
+              } items-center p-1 cursor-pointer hover:bg-white justify-center`}
               onClick={() => handleCompontent("tumini")}
             >
               <Image
@@ -117,7 +129,9 @@ const Popup = ({ show, onClose }: { show: boolean; onClose: () => void }) => {
               <p className="font-bold text-[1rem] ms-2">Tumini</p>
             </div>
             <div
-              className={`col-span-4 flex items-center ${currentComponent === "reps" ? "bg-white" : ""} p-1 cursor-pointer hover:bg-white justify-center`}
+              className={`col-span-4 flex items-center ${
+                currentComponent === "reps" ? "bg-white" : ""
+              } p-1 cursor-pointer hover:bg-white justify-center`}
               onClick={() => handleCompontent("reps")}
             >
               <Image
@@ -129,39 +143,38 @@ const Popup = ({ show, onClose }: { show: boolean; onClose: () => void }) => {
               <p className="font-bold text-[1rem] ms-1">GoPaddiReps</p>
             </div>
           </div>
-        <div className="bg-white  w-full h-full">
-        <div className="flex justify-between mx-5 my-5">
-            <div className="flex items-center group">
-              <p className="font-semibold text-[1.1rem]">{submenus}</p>
-              <Image
-                src="/assets/downArrow.png"
-                alt="icon"
-                width={14}
-                height={14}
-                className="ms-2"
-              />
-            </div>
-            <div className="flex items-center">
-             
-              <Image
-                src="/assets/Home.png"
-                alt="icon"
-                width={40}
-                height={40}
-                className="ms-2"
-                onClick={() => handleCompontent("paddi")}
-              />
-               <Image
-                src="/assets/NewChat.png"
-                alt="icon"
-                width={40}
-                height={40}
-                className="ms-2"
-                onClick={()=>setCurrentComponent('form')}
-              />
+          <div className="bg-white  w-full h-full">
+            <div className="flex justify-between mx-5 my-5">
+              <div className="flex items-center group">
+                <p className="font-semibold text-[1.1rem]">{submenus}</p>
+                <Image
+                  src="/assets/downArrow.png"
+                  alt="icon"
+                  width={14}
+                  height={14}
+                  className={`ms-2 ${submenus === '' ? "hidden" : " "}`}
+                />
+              </div>
+              <div className="flex items-center">
+                <Image
+                  src="/assets/Home.png"
+                  alt="icon"
+                  width={40}
+                  height={40}
+                  className="ms-2"
+                  onClick={() => handleCompontent("paddi")}
+                />
+                <Image
+                  src="/assets/NewChat.png"
+                  alt="icon"
+                  width={40}
+                  height={40}
+                  className={`ms-2 ${submenus === '' ? "hidden" : " "}`}
+                  onClick={() => setCurrentComponent("form")}
+                />
+              </div>
             </div>
           </div>
-        </div>
           {renderComponent()}
         </>
       ) : (
@@ -231,7 +244,13 @@ const Popup = ({ show, onClose }: { show: boolean; onClose: () => void }) => {
               </div>
             </div>
             <div className="rounded-lg p-3 border border-[#0D6EFD] my-4 mx-8 mb-20">
-              <div className="flex items-center" onClick={handlescreen}>
+              <div
+                className="flex items-center"
+                onClick={() => {
+                  handlescreen();
+                  handleCompontent("history");
+                }}
+              >
                 <Image
                   src="/assets/history.png"
                   alt="info icon"

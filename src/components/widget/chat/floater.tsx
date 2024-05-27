@@ -63,7 +63,7 @@ function Floater() {
                You have 2 unread messages 🔔
              </div>
               ):
-                <div onClick={() => setChat(true)} className="widget-floater-description w-fit px-6 py-4 text-white font-semibold rounded-2xl">
+                <div onClick={() => setChat(true)} className="widget-floater-description w-fit px-6 py-4 text-white font-semibold rounded-2xl cursor-pointer">
                  Ask me anything..💡
                 </div>
 }
