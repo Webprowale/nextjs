@@ -11,20 +11,27 @@ const Popup = ({ show, onClose }: { show: boolean; onClose: () => void }) => {
   const [managescreen, setSecreen] = useState(false);
   const [currentComponent, setCurrentComponent] = useState<string>("paddi");
   const [submenus, setMenus] = useState<string>("Your Paddi");
-
+  const [relatemanger, setRelatemanger] = useState<boolean>(false);
+  const [relateBtn, setRelateBtn] = useState<boolean>(false);
+  const [isother, setOther] = useState<boolean>(false);
+  type ActiveSRelationship = "none" | "profile" | "relationship";
+  const [activeState, setActiveState] = useState<ActiveSRelationship>("none");
   const handlescreen = () => {
     setSecreen(true);
   };
   useEffect(() => {
     if (currentComponent === "tumini") {
       setMenus("Your Relationship manager");
+      setRelatemanger(true);
     } else if (currentComponent === "reps") {
       setMenus("GoPaddi Rep");
+      setRelatemanger(false);
     } else if (currentComponent === "history") {
       setMenus("");
-    } 
-     else {
+      setRelatemanger(false);
+    } else {
       setMenus("Your Paddi");
+      setRelatemanger(false);
     }
   }, [currentComponent]);
 
@@ -145,16 +152,206 @@ const Popup = ({ show, onClose }: { show: boolean; onClose: () => void }) => {
           </div>
           <div className="bg-white  w-full h-full">
             <div className="flex justify-between mx-5 my-5">
-              <div className="flex items-center group">
+              <div
+                className="flex items-center relative"
+                onClick={() => setRelateBtn(!relateBtn)}
+              >
                 <p className="font-semibold text-[1.1rem]">{submenus}</p>
                 <Image
                   src="/assets/downArrow.png"
                   alt="icon"
                   width={14}
                   height={14}
-                  className={`ms-2 ${submenus === '' ? "hidden" : " "}`}
+                  className={`ms-2 ${submenus === "" ? "hidden" : " "}`}
                 />
+                {relatemanger && relateBtn ? (
+                  <div className="absolute top-7 left-[40px] w-full bg-white p-2 shadow-lg transition-all ease-in-out duration-300  rounded-[20px]">
+                    <ul>
+                      <li
+                        className="flex my-3 mx-3 p-3 items-center hover:text-[#0D6EFD] hover:bg-[#F3F7FF]"
+                        onClick={() => setActiveState("profile")}
+                      >
+                        <Image
+                          src="/assets/info.svg"
+                          alt="icon"
+                          className="me-2"
+                          width={25}
+                          height={25}
+                        />
+                        See Profile
+                      </li>
+                      <li
+                        className="flex my-3 mx-3 p-3 items-center hover:text-[#0D6EFD] hover:bg-[#F3F7FF]"
+                        onClick={() => setActiveState("relationship")}
+                      >
+                        <Image
+                          src="/assets/PencilSimpleLine.svg"
+                          alt="icon"
+                          className="me-2"
+                          width={25}
+                          height={25}
+                        />
+                        Change Relationship Manager
+                      </li>
+                      <li className="flex my-3 mx-3 p-3 items-center text-[#CB1A14] hover:bg-[#F3F7FF]">
+                        <Image
+                          src="/assets/XCircle.svg"
+                          alt="icon"
+                          className="me-2"
+                          width={25}
+                          height={25}
+                        />
+                        End Chat
+                      </li>
+                    </ul>
+                  </div>
+                ) : (
+                  ""
+                )}
+                {activeState === "profile" && relatemanger ? (
+                  <div className="fixed bottom-2 ">
+                    <div className="bg-white rounded-lg  py-2 px-4 shadow w-[500px]">
+                      <div className="flex justify-end mb-8">
+                        <Image
+                          src="/assets/x.svg"
+                          alt="icon"
+                          width={23}
+                          height={23}
+                          onClick={() => setActiveState("none")}
+                        />
+                      </div>
+                      <div className="flex flex-col space-y-2 px-4 ">
+                        <Image
+                          src="/assets/Ellipse 777.svg"
+                          width={50}
+                          height={50}
+                          alt="icon"
+                        />
+                        <h3 className="text-[#1D2433] text-[22px] font-bold">
+                          Tumini Marcel
+                        </h3>
+                        <div className="flex">
+                          <Image
+                            src="/assets/Briefcase.svg"
+                            alt="icon"
+                            width={20}
+                            height={20}
+                          />
+                          <p className="text-[#1D2433] text-[16px]">
+                            Travel Consultant
+                          </p>
+                        </div>
+                        <div className="flex">
+                          <Image
+                            src="/assets/EnvelopeSimpleOpen.svg"
+                            alt="icon"
+                            width={20}
+                            height={20}
+                          />
+                          <p className="text-[#1D2433] text-[16px]">
+                            mtumini@gopal.com
+                          </p>
+                        </div>
+                        <div className="flex">
+                          <Image
+                            src="/assets/PhoneCall.svg"
+                            alt="icon"
+                            width={20}
+                            height={20}
+                          />
+                          <p className="text-[#1D2433] text-[16px]">
+                            +2345533377464
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  ""
+                )}
+                {activeState === "relationship" && relatemanger ? (
+                  <div className="fixed bottom-2 ">
+                    <div className="bg-white rounded-lg  py-2 px-4 shadow w-[500px] mx-4">
+                      <div className="flex justify-end mb-8">
+                        <Image
+                          src="/assets/x.svg"
+                          alt="icon"
+                          width={23}
+                          height={23}
+                          onClick={() => setActiveState("none")}
+                        />
+                      </div>
+                      <div className="flex flex-col">
+                        <h3 className="text-[22px] font-bold text-[#1D2433]">
+                          Change Relationship Manager
+                        </h3>
+                        <p className="text-[16px] font-medium">
+                          Could you tell us why you want to change your
+                          relationship manger?
+                        </p>
+                        <form>
+                          <div className="space-y-2 pb-5">
+                            <label className="flex items-center">
+                              <input
+                                type="radio"
+                                className="form-checkbox"
+                                name="role"
+                              />
+                              <span className="ml-2">I’d rather not say</span>
+                            </label>
+                            <label className="flex items-center">
+                              <input
+                                type="radio"
+                                className="form-checkbox"
+                                name="role"
+                              />
+                              <span className="ml-2">
+                                Response time is slow
+                              </span>
+                            </label>
+                            <label className="flex items-center">
+                              <input
+                                type="radio"
+                                className="form-checkbox"
+                                name="role"
+                              />
+                              <span className="ml-2">
+                                I need someone more experienced
+                              </span>
+                            </label>
+                            <label className="flex items-center mb-3">
+                              <input
+                                type="radio"
+                                className="form-checkbox"
+                                name="role"
+                                checked={isother}
+                                onChange={() => setOther(true)}
+                              />
+                              <span className="ml-2">Other</span>
+                            </label>
+                            {isother && (
+                              <input
+                                type="text"
+                                className="w-full p-2 border border-gray-300 rounded-md focus:outline-none"
+                                placeholder="Please specify"
+                              />
+                            )}
+                            <button
+                              className="bg-[#0D6EFD] text-white text-[14px] w-full p-2"
+                              type="submit"
+                            >
+                              Submit Change Request
+                            </button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  ""
+                )}
               </div>
+
               <div className="flex items-center">
                 <Image
                   src="/assets/Home.png"
@@ -169,7 +366,7 @@ const Popup = ({ show, onClose }: { show: boolean; onClose: () => void }) => {
                   alt="icon"
                   width={40}
                   height={40}
-                  className={`ms-2 ${submenus === '' ? "hidden" : " "}`}
+                  className={`ms-2 ${submenus === "" ? "hidden" : " "}`}
                   onClick={() => setCurrentComponent("form")}
                 />
               </div>
